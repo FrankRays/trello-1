@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Category;
 
 /**
  * CategoryRepository
@@ -21,5 +22,18 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('c.orderId')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @return int
+     */
+    public function getFirstCategory()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->orderBy('c.orderId')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getSingleResult();
     }
 }

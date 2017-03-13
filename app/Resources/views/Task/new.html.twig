@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Affichage des taches
+{% endblock %}
+
+{% block content %}
+    {{ form_start() }}
+
+    {{ form_errors() }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+
+    {{ form_rest() }}
+
+    {{ form_end() }}
+
+{% endblock %}

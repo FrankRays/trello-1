@@ -27,6 +27,14 @@ class CategoryManager {
     }
 
     /**
+     * @return int
+     */
+    public function getFirstCategory()
+    {
+        return $this->getRepository()->getFirstCategory();
+    }
+
+    /**
      * @return \AppBundle\Repository\CategoryRepository|\Doctrine\Common\Persistence\ObjectRepository
      */
     private function getRepository()

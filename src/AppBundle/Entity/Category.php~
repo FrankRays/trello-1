@@ -13,14 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Category
 {
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * @var Task
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="category")
      */
@@ -111,58 +103,6 @@ class Category
     {
         return $this->name;
     }
-
-    /**
-     * Set Count
-     * @param $count
-     * @return $this
-     */
-    public function setCount($count)
-    {
-        $this->count = $count;
-
-        return $this;
-    }
-
-    /**
-     * Get Count
-     * @return int
-     */
-    public function getCount()
-    {
-        return $this->count;
-    }
-    /**
-     * Add task
-     *
-     * @param \AppBundle\Entity\Task $task
-     *
-     * @return Category
-     */
-    public function addTask(\AppBundle\Entity\Task $task)
-    {
-        $this->tasks[] = $task;
-
-        return $this;
-    }
-
-    /**
-     * Remove task
-     *
-     * @param \AppBundle\Entity\Task $task
-     */
-    public function removeTask(\AppBundle\Entity\Task $task)
-    {
-        $this->tasks->removeElement($task);
-    }
-
-    /**
-     * Get tasks
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTasks()
-    {
-        return $this->tasks;
-    }
+    
 }
+

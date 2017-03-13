@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Task
 {
+    const STATUS_OPEN = 'open';
+    const STATUS_CLOSED = 'closed';
+
+
     /**
      * @var int
      *
@@ -115,9 +119,9 @@ class Task
      *
      * @return Task
      */
-    public function setCategoryId($categoryId)
+    public function setCategory(Category $category)
     {
-        $this->categoryId = $categoryId;
+        $this->category = $category;
 
         return $this;
     }

@@ -12,6 +12,10 @@ use AppBundle\Entity\Category;
 class TaskRepository extends \Doctrine\ORM\EntityRepository
 {
 
+    /**
+     * @param Category $category
+     * @return array
+     */
     public function getTasksByCategory(Category $category)
     {
         return $this->createQueryBuilder('t')
@@ -20,5 +24,19 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('category', $category->getId())
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param Category $category
+     * @return mixed
+     */
+    public function getCountByCategory(Category $category)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('COUNT(t) as total')
+            ->andWhere('t.category = :category')
+            ->setParameter(':category', $category)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

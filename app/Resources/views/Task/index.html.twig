@@ -7,8 +7,8 @@ Affichage des taches
 {% block content %}
     {% for colonne in colonnes %}
         <div class="col-md-3">
-        <h2>{{ colonne.Name }} <span class="badge" title="nombre de tâches">2</span></h2>
-        {% for tache in taches[colonne.orderid] %}
+        <h2>{{ colonne.Name }} <span class="badge" title="nombre de tâches">{{ colonne.getCount }}</span></h2>
+        {% for tache in colonne.getTasks %}
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="tachemodify">

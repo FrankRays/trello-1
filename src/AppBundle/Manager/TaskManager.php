@@ -19,9 +19,42 @@ class TaskManager {
         $this->manager = $manager;
     }
 
+    /**
+     * @param Category $category
+     * @return array
+     */
     public function getTasksByCategory(Category $category)
     {
         return $this->getRepository()->getTasksByCategory($category);
+    }
+
+    /**
+     * @param Category $category
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getCountByCategory(Category $category)
+    {
+        return $this->getRepository()->getCountByCategory($category);
+    }
+
+    /**
+     * @param Task $task
+     */
+    public function save(Task $task)
+    {
+        if ($task->getId()=== null)
+        {
+            $this->manager->persist($task);
+        }
+        $this->manager->flush();
+    }
+
+    /**
+     * @return Task
+     */
+    public function create()
+    {
+        return new Task();
     }
 
     /**
