@@ -7,3 +7,12 @@ services:
     #service_name:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+
+    app.task_manager:
+        class: AppBundle\Manager\TaskManager
+        arguments:
+            - "@=service('Doctrine').getManager()"
+    app.category_manager:
+        class: AppBundle\Manager\CategoryManager
+        arguments:
+            - "@=service('Doctrine').getManager()"

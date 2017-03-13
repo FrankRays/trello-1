@@ -13,9 +13,22 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+        //recup du manager
+        $taskmanager = $this->container->get('app.task_manager');
+        $categorymanager = $this->container->get('app.category_manager');
+
+        $categorys = $categorymanager->getAllCategory();
+
+        foreach ($categorys as $category)
+        {
+            $tasks[$category->getOrderId()] = $taskmanager->getTasksByCategory($category);
+        }
+
+        // retourne la vue
+        return $this->render(':Task:index.html.twig', [
+            "colonnes" => $categorys,
+            "taches" => $tasks,
         ]);
     }
+
 }
