@@ -36,11 +36,11 @@ class Task
     private $description;
 
     /**
-     * @var int
+     * @var Category
      *
-     * @ORM\Column(name="id_colonne", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category",inversedBy="tasks")
      */
-    private $categoryId;
+    private $category;
 
     /**
      * @var string
