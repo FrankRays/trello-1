@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+Affichage des taches
+{% endblock %}
+
+{% block content %}
+    {% for colonne in colonnes %}
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-header">
+                    <h2>{{ colonne.Name }} <span class="badge" title="nombre de tâches">{{ colonne.getCount }}</span></h2>
+                </div>
+                <div class="panel-body">
+                    <p>Id : {{ colonne.id }}</p>
+                    <p>Ordre : {{ colonne.orderId }}</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div>Aucune colonne</div>
+    {% endfor %}
+
+{% endblock %}
