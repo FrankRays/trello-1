@@ -58,6 +58,15 @@ class TaskManager {
     }
 
     /**
+     * @param Task $task
+     */
+    public function remove(Task $task)
+    {
+        $this->manager->remove($task);
+        $this->manager->flush();
+    }
+
+    /**
      * @return Task
      */
     public function create()

@@ -7,7 +7,9 @@ use AppBundle\Entity\Task;
 use AppBundle\Form\TaskType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TaskControlleur extends Controller
 {
@@ -58,7 +60,6 @@ class TaskControlleur extends Controller
                 'success',
                 'Votre tache a bien été ajouté !'
             );
-
             return $this->redirectToRoute('homepage');
         }
         // retourne la vue
@@ -76,7 +77,7 @@ class TaskControlleur extends Controller
         $taskManager = $this->getTaskManager();
 
         //on recup la tache
-        $task = $taskManager->getTaskById($idtask);
+        $task = $this->getTask($idtask);
 
         //on recup le form relié à la requete
         $form = $this->getForm($request,$task);
@@ -100,6 +101,47 @@ class TaskControlleur extends Controller
         ]);
     }
 
+    /**
+     * @Route("/deletetask/{idtask}",name="app_delete_task")
+     */
+    public function deleteAction(Request $request,$idtask)
+    {
+        //recup du manager
+        $taskmanager = $this->getTaskManager();
+
+        //on recup la tache
+        $task = $this->getTask($idtask);
+
+        //on supprime la tache
+        $taskmanager->remove($task);
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @param $idtask
+     * @return mixed
+     */
+    private function getTask($idtask)
+    {
+        if (intval($idtask)==0)
+        {
+            throw new NotFoundHttpException('l\'id doit être un nombre entier!');
+        }
+        $task = $this->getTaskManager()->getTaskById($idtask);
+        if (!$task)
+        {
+            throw new NotFoundHttpException('Tache introuvable !');
+        }
+
+        return $task;
+    }
+
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @return \Symfony\Component\Form\Form
+     */
     private function getForm(Request $request,Task $task)
     {
         $form = $this->createForm(TaskType::class,$task);
@@ -107,7 +149,10 @@ class TaskControlleur extends Controller
         return $form;
     }
 
-    public function getTaskManager()
+    /**
+     * @return \AppBundle\Manager\TaskManager|object
+     */
+    private function getTaskManager()
     {
         return $this->container->get('app.task_manager');
     }
@@ -115,7 +160,7 @@ class TaskControlleur extends Controller
     /**
      * @return \AppBundle\Manager\CategoryManager|object
      */
-    public function getCategoryManager()
+    private function getCategoryManager()
     {
         return $this->container->get('app.category_manager');
     }
