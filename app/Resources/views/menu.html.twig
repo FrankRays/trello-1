@@ -11,11 +11,13 @@
             <a class="navbar-brand" href="{{ path('homepage') }}"><span class="glyphicon glyphicon-stats"></span> Suivi des taches</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ path('app_new_task') }}">Ajouter un tache</a></li>
-            </ul>
             <form class="navbar-form navbar-right">
+                <a href="{{ path('app_new_task') }}">
+                <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span> Ajouter une t&acirc;che</button>
+                </a>
+                <!--
                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span> Ajouter une t&acirc;che</button>
+                -->
             </form>
         </div>
     </div>
