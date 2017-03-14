@@ -4,3 +4,11 @@
 footer {
     text-align: center;
 }
+.menubar {
+    color:white;
+    display:flex;
+    align-items: center;
+}
+.menubar li {
+    color:#FFF;
+}

@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TaskControlleur extends Controller
 {
-
     /**
      * @Route("/", name="homepage")
      */
