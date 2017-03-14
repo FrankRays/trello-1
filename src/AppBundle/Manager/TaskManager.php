@@ -20,6 +20,14 @@ class TaskManager {
     }
 
     /**
+     * @param $idtask
+     * @return mixed
+     */
+    public function getTaskById($idtask)
+    {
+        return $this->getRepository()->getTaskById($idtask);
+    }
+    /**
      * @param Category $category
      * @return array
      */

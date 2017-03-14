@@ -13,6 +13,20 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
 {
 
     /**
+     * @param $idtask
+     * @return mixed
+     */
+    public function getTaskById($idtask)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t')
+            ->andWhere('t.id = :id')
+            ->setParameter(':id',$idtask)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * @param Category $category
      * @return array
      */

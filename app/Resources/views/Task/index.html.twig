@@ -12,7 +12,7 @@ Affichage des taches
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="tachemodify">
-                        <a href="index.php?action=voirtache&id_tache=<?php echo $tache->getId(); ?>"><span class="glyphicon glyphicon-pencil" title="Modifier la t&acirc;che"></span></a>
+                        <a href="{{ path('app_modif_task',{'idtask': tache.id}) }}"><span class="glyphicon glyphicon-pencil" title="Modifier la t&acirc;che"></span></a>
                         <a href="index.php?action=supprimertache&id_tache=<?php echo $tache->getId(); ?>"><span class="glyphicon glyphicon-remove" title="Supprimer la t&acirc;che"></span></a>
                     </div>
                     <p>{{ tache.description }}</p>

@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\AppBundle;
 use AppBundle\Entity\Task;
 use AppBundle\Form\TaskType;
-use Doctrine\ORM\Mapping\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,8 +45,8 @@ class TaskControlleur extends Controller
         //on crée une tache
         $task = $taskManager->create();
 
-        //on construit le formulaire
-        $form = $this->createForm(TaskType::class,$task);
+        //on recup le form relié à la requete
+        $form = $this->getForm($request,$task);
 
         if ($form->isSubmitted() AND $form->isValid())
         {
@@ -59,16 +58,54 @@ class TaskControlleur extends Controller
                 'success',
                 'Votre tache a bien été ajouté !'
             );
+
+            return $this->redirectToRoute('homepage');
         }
         // retourne la vue
         return $this->render(':Task:new.html.twig', [
             'form' => $form->createView(),
         ]);
-
-
-        return $this->redirectToRoute('homepage');
     }
 
+    /**
+     * @Route("/modiftask/{idtask}",name="app_modif_task", methods={"GET","POST"})
+     */
+    public function modifAction(Request $request,$idtask)
+    {
+        //recup du manager
+        $taskManager = $this->getTaskManager();
+
+        //on recup la tache
+        $task = $taskManager->getTaskById($idtask);
+
+        //on recup le form relié à la requete
+        $form = $this->getForm($request,$task);
+
+        if ($form->isSubmitted() AND $form->isValid())
+        {
+            //ajout de la tache en bdd
+            $taskManager->save($task);
+
+            //message de notification
+            $this->addFlash(
+                'success',
+                'Votre tache a bien été modifié !'
+            );
+
+            return $this->redirectToRoute('homepage');
+        }
+        // retourne la vue
+        return $this->render(':Task:new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    private function getForm(Request $request,Task $task)
+    {
+        $form = $this->createForm(TaskType::class,$task);
+        $form->handleRequest($request);
+        return $form;
+    }
 
     public function getTaskManager()
     {
