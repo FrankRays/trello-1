@@ -36,4 +36,18 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults(1)
             ->getSingleResult();
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getCategoryById($id)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->andWhere('c.id = :id')
+            ->setParameter(':id' , $id)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

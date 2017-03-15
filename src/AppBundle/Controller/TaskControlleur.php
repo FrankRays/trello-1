@@ -2,31 +2,35 @@
 // src/AppBundle/Controller/TaskControlleur
 namespace AppBundle\Controller;
 
-use AppBundle\AppBundle;
 use AppBundle\Entity\Task;
 use AppBundle\Form\TaskType;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as FOSRest;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class TaskControlleur extends Controller
+class TaskControlleur extends FOSRestController
 {
     /**
      * @Route("/", name="homepage")
+     *
      */
     public function indexAction(Request $request)
     {
-        //recup du manager
-        $categoryManager = $this->getCategoryManager();
-        $taskmanager = $this->getTaskManager();
-
-        $categorys = $categoryManager->getAllCategory();
+        $categorys = $this->getCategoryManager()->getAllCategory();
         foreach ($categorys as $category)
         {
-            $nbTaskByCategory = $taskmanager->getCountByCategory($category);
+            $nbTaskByCategory = $this->getTaskManager()->getCountByCategory($category);
             $category->setCount($nbTaskByCategory);
         }
+
+        $view = $this->view($categorys,Response::HTTP_OK)
+            ->setTemplate(':Task:index.html.twig')
+            ->setTemplateVar('colonnes');
+        return $this->handleView($view);
 
         // retourne la vue
         return $this->render(':Task:index.html.twig', [
@@ -36,6 +40,7 @@ class TaskControlleur extends Controller
 
     /**
      * @Route("/newtask", name="app_new_task", methods={"GET","POST"})
+     *
      */
     public function newAction(Request $request)
     {
@@ -68,6 +73,7 @@ class TaskControlleur extends Controller
 
     /**
      * @Route("/modiftask/{idtask}",name="app_modif_task", methods={"GET","POST"})
+     *
      */
     public function modifAction(Request $request,$idtask)
     {
@@ -101,6 +107,7 @@ class TaskControlleur extends Controller
 
     /**
      * @Route("/deletetask/{idtask}",name="app_delete_task")
+     *
      */
     public function deleteAction(Request $request,$idtask)
     {

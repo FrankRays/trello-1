@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -17,7 +18,7 @@ class Category
      */
     public function __construct()
     {
-        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -32,6 +33,7 @@ class Category
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
      */
     private $id;
 
@@ -39,6 +41,13 @@ class Category
      * @var int
      *
      * @ORM\Column(name="ordre", type="integer")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Range(
+     *     min="0",
+     *     minMessage="il faut un nombre positif",
+     * )
+     *
      */
     private $orderId;
 
@@ -46,6 +55,7 @@ class Category
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 

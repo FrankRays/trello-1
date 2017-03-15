@@ -16,3 +16,7 @@ services:
         class: AppBundle\Manager\CategoryManager
         arguments:
             - "@=service('Doctrine').getManager()"
+    app.normalizer.category:
+        class: AppBundle\Serializer\Normalizer\CategoryNormalizer
+        tags:
+            - { name: serializer.normalizer }
